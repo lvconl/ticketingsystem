@@ -19,9 +19,15 @@ public class TrainServiceTest {
         Seat seat = null;
         int route = 3;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300; i++) {
             seat = trainService.getFreeSeatByRoute(route, 2, 3);
+            allSeat.add(seat);
         }
-        System.out.println(seat.getSeatNum());
+
+
+        System.out.println(trainService.getFreeSeatCountByRoute(route, 2, 3));
+
+        seat = trainService.getFreeSeatByRoute(route, 2, 3);
+        System.out.println(trainService.getFreeSeatCountByRoute(route, 2, 3));
     }
 }

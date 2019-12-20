@@ -38,24 +38,19 @@ public class TrainServiceImpl implements ITrainService {
     public Seat getFreeSeatByRoute(int route, int departure, int arrival) {
         Seat seat = null;
         boolean finded = false;
-        for (int i = 1; i <= coachNum; i++) {
-            for (int j = ((i - 1) * seatNum + 1); j <= totalSeatNum; j++) {
-                if (isEmptySeat(trains[route], j, departure, arrival)) {
-                    trains[route].getLock()[j].lock();
-                    try {
-                        if (isEmptySeat(trains[route], j, departure, arrival)) {
-                            seat = new Seat(j, i);
-                            setSeatNonEmpty(trains[route], j, departure, arrival);
-                            finded = true;
-                            break;
-                        }
-                    } finally {
-                        trains[route].getLock()[j].unlock();
+        for (int i = 1; i <= totalSeatNum; i++) {
+            if (isEmptySeat(trains[route], i, departure, arrival)) {
+                trains[route].getLock()[i].lock();
+                try {
+                    if (isEmptySeat(trains[route], i, departure, arrival)) {
+                        seat = new Seat(i, i % seatNum == 0 ?  (i / seatNum) : (i / seatNum + 1));
+                        setSeatNonEmpty(trains[route], i, departure, arrival);
+                        finded = true;
+                        break;
                     }
+                } finally {
+                    trains[route].getLock()[i].unlock();
                 }
-            }
-            if (finded) {
-                break;
             }
         }
         return seat;
