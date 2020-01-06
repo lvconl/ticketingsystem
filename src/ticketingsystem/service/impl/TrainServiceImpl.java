@@ -69,9 +69,9 @@ public class TrainServiceImpl implements ITrainService {
 
     @Override
     public boolean refundTicket(Seat seat, int route, int departure, int arrival) {
-        if (seat.getSeatNum() >= totalSeatNum || seat.getCoachNum() >= coachNum) {
-            return false;
-        }
+//        if (seat.getSeatNum() >= totalSeatNum || seat.getCoachNum() >= coachNum) {
+//            return false;
+//        }
         trains[route].getLock()[seat.getSeatNum()].lock();
         try {
             for (int i = departure; i < arrival; i++) {

@@ -28,6 +28,7 @@ public class TrainServiceTest {
         System.out.println(trainService.getFreeSeatCountByRoute(route, 2, 3));
 
         seat = trainService.getFreeSeatByRoute(route, 2, 3);
+        System.out.println(seat.getCoachNum());
         System.out.println(trainService.getFreeSeatCountByRoute(route, 2, 3));
     }
 }

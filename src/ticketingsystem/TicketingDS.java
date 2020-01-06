@@ -57,9 +57,9 @@ public class TicketingDS implements TicketingSystem {
     @Override
     public boolean refundTicket(Ticket ticket) {
         // 检查车票是否合法，不合法返回false
-        if (ticket == null || ticket.route >= routeNum || ticket.departure >= stationNum || ticket.arrival >= stationNum) {
-            return false;
-        }
+//        if (ticket == null || ticket.route >= routeNum || ticket.departure >= stationNum || ticket.arrival >= stationNum) {
+//            return false;
+//        }
         Seat seat = new Seat(ticket.seat, ticket.coach);
         return trainService.refundTicket(seat, ticket.route, ticket.departure, ticket.arrival);
     }
