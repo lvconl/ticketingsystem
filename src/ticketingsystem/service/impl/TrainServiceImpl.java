@@ -43,7 +43,7 @@ public class TrainServiceImpl implements ITrainService {
                 trains[route].getLock()[i].lock();
                 try {
                     if (isEmptySeat(trains[route], i, departure, arrival)) {
-                        seat = new Seat(i, i % seatNum == 0 ?  (i / seatNum) : (i / seatNum + 1));
+                        seat = new Seat(i % seatNum + 1, i % seatNum == 0 ?  (i / seatNum) : (i / seatNum + 1));
                         setSeatNonEmpty(trains[route], i, departure, arrival);
                         finded = true;
                         break;

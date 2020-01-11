@@ -336,18 +336,18 @@ public class Test {
         final int defaultCoachNum = 15;
         final int defaultSeatNum = 100;
         final int defaultStationNum = 10;
-        final int defaultThreadNum = 96;
+        final int defaultThreadNum = 4;
         final int defaultTotalCallNum = 100000;
 
         int coreNumber = Runtime.getRuntime().availableProcessors();
 
         int[] threadNumbers = {4, 8, 16, 32, 64, 96};
 
-//        multiThreadTest("test", defaultRouteNum, defaultCoachNum, defaultSeatNum,
-//                        defaultStationNum, defaultThreadNum, defaultTotalCallNum);
-        for (int i = 0; i < threadNumbers.length; i++) {
-            multiThreadTest("thread" + threadNumbers[i], defaultRouteNum, defaultCoachNum, defaultSeatNum,
-                    defaultStationNum, threadNumbers[i], defaultTotalCallNum);
-        }
+        multiThreadTest("test", defaultRouteNum, defaultCoachNum, defaultSeatNum,
+                        defaultStationNum, defaultThreadNum, defaultTotalCallNum);
+//        for (int i = 0; i < threadNumbers.length; i++) {
+//            multiThreadTest("thread" + threadNumbers[i], defaultRouteNum, defaultCoachNum, defaultSeatNum,
+//                    defaultStationNum, threadNumbers[i], defaultTotalCallNum);
+//        }
     }
 }

@@ -5,6 +5,7 @@ import ticketingsystem.entity.Train;
 import ticketingsystem.service.ITrainService;
 import ticketingsystem.service.impl.TrainServiceImpl;
 
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -35,10 +36,13 @@ public class TicketingDS implements TicketingSystem {
     @Override
     public Ticket buyTicket(String passenger, int route, int departure, int arrival) {
         Ticket ticket = null;
+
+        Random ran = new Random();
+
         Seat seat = trainService.getFreeSeatByRoute(route, departure, arrival);
         if (seat != null) {
             ticket = new Ticket();
-            ticket.tid = ticketId.getAndIncrement();
+            ticket.tid = ticketId.getAndIncrement() + ran.nextInt(100);
             ticket.passenger = passenger;
             ticket.route = route;
             ticket.coach = seat.getCoachNum();
