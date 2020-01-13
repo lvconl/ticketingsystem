@@ -37,19 +37,36 @@ public class TrainServiceImpl implements ITrainService {
     @Override
     public Seat getFreeSeatByRoute(int route, int departure, int arrival) {
         Seat seat = null;
-        boolean finded = false;
-        for (int i = 1; i <= totalSeatNum; i++) {
-            if (isEmptySeat(trains[route], i, departure, arrival)) {
-                trains[route].getLock()[i].lock();
-                try {
-                    if (isEmptySeat(trains[route], i, departure, arrival)) {
-                        seat = new Seat(i % seatNum + 1, i % seatNum == 0 ?  (i / seatNum) : (i / seatNum + 1));
-                        setSeatNonEmpty(trains[route], i, departure, arrival);
-                        finded = true;
-                        break;
+//        boolean finded = false;
+//        for (int i = 1; i <= totalSeatNum; i++) {
+//            if (isEmptySeat(trains[route], i, departure, arrival)) {
+//                trains[route].getLock()[i].lock();
+//                try {
+//                    if (isEmptySeat(trains[route], i, departure, arrival)) {
+//                        seat = new Seat(i % seatNum + 1, i % seatNum == 0 ?  (i / seatNum) : (i / seatNum + 1));
+//                        setSeatNonEmpty(trains[route], i, departure, arrival);
+//                        finded = true;
+//                        break;
+//                    }
+//                } finally {
+//                    trains[route].getLock()[i].unlock();
+//                }
+//            }
+//        }
+        for (int i = 1; i <= coachNum; i++) {
+            for (int j = 1; j <= seatNum; j++) {
+                int seatNumber = (i - 1) * seatNum + j;
+                if (isEmptySeat(trains[route], seatNumber, departure, arrival)) {
+                    trains[route].getLock()[seatNumber].lock();
+                    try {
+                        if (isEmptySeat(trains[route], seatNumber, departure, arrival)) {
+                            seat = new Seat(j, i);
+                            setSeatNonEmpty(trains[route], seatNumber, departure, arrival);
+                            break;
+                        }
+                    } finally {
+                        trains[route].getLock()[seatNumber].unlock();
                     }
-                } finally {
-                    trains[route].getLock()[i].unlock();
                 }
             }
         }
@@ -72,13 +89,14 @@ public class TrainServiceImpl implements ITrainService {
 //        if (seat.getSeatNum() >= totalSeatNum || seat.getCoachNum() >= coachNum) {
 //            return false;
 //        }
-        trains[route].getLock()[seat.getSeatNum()].lock();
+        int seatNumber = (seat.getCoachNum() - 1) * coachNum + seat.getSeatNum();
+        trains[route].getLock()[seatNumber].lock();
         try {
             for (int i = departure; i < arrival; i++) {
-                trains[route].getCoachs()[seat.getSeatNum()][i] = false;
+                trains[route].getCoachs()[seatNumber][i] = false;
             }
         } finally {
-            trains[route].getLock()[seat.getSeatNum()].unlock();
+            trains[route].getLock()[seatNumber].unlock();
         }
         return true;
     }

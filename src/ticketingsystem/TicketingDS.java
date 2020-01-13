@@ -14,7 +14,7 @@ public class TicketingDS implements TicketingSystem {
     /**
      * 车票id
      */
-    private AtomicLong ticketId = new AtomicLong(0);
+    private AtomicLong ticketId = new AtomicLong(1);
 
     private int routeNum;
     private int coachNum;
@@ -36,13 +36,10 @@ public class TicketingDS implements TicketingSystem {
     @Override
     public Ticket buyTicket(String passenger, int route, int departure, int arrival) {
         Ticket ticket = null;
-
-        Random ran = new Random();
-
         Seat seat = trainService.getFreeSeatByRoute(route, departure, arrival);
         if (seat != null) {
             ticket = new Ticket();
-            ticket.tid = ticketId.getAndIncrement() + ran.nextInt(100);
+            ticket.tid = ticketId.getAndIncrement();
             ticket.passenger = passenger;
             ticket.route = route;
             ticket.coach = seat.getCoachNum();

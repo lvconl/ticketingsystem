@@ -23,7 +23,7 @@ class ThreadId {
 }
 
 public class Trace {
-	final static int threadnum = 8;
+	final static int threadnum = 1;
 	final static int routenum = 3; // route is designed from 1 to 3
 	final static int coachnum = 3; // coach is arranged from 1 to 3
 	final static int seatnum = 3; // seat is allocated from 1 to 3
@@ -62,7 +62,7 @@ public class Trace {
             				int select = rand.nextInt(soldTicket.size());
            				if ((ticket = soldTicket.remove(select)) != null) {
             					if (tds.refundTicket(ticket)) {
-            						//System.out.println("TicketRefund" + " " + ticket.tid + " " + ticket.passenger + " " + ticket.route + " " + ticket.coach  + " " + ticket.departure + " " + ticket.arrival + " " + ticket.seat);
+            						System.out.println("TicketRefund" + " " + ticket.tid + " " + ticket.passenger + " " + ticket.route + " " + ticket.coach  + " " + ticket.departure + " " + ticket.arrival + " " + ticket.seat);
             						System.out.flush();
             					} else {
             						System.out.println("ErrOfRefund");
@@ -79,10 +79,10 @@ public class Trace {
             				int arrival = departure + rand.nextInt(stationnum - departure) + 1; // arrival is always greater than departure
             				if ((ticket = tds.buyTicket(passenger, route, departure, arrival)) != null) {
             					soldTicket.add(ticket);
-            					//System.out.println("TicketBought" + " " + ticket.tid + " " + ticket.passenger + " " + ticket.route + " " + ticket.coach + " " + ticket.departure + " " + ticket.arrival + " " + ticket.seat);
+            					System.out.println("TicketBought" + " " + ticket.tid + " " + ticket.passenger + " " + ticket.route + " " + ticket.coach + " " + ticket.departure + " " + ticket.arrival + " " + ticket.seat);
         						System.out.flush();
             				} else {
-            					//System.out.println("TicketSoldOut" + " " + route+ " " + departure+ " " + arrival);
+            					System.out.println("TicketSoldOut" + " " + route+ " " + departure+ " " + arrival);
         						System.out.flush();
             				}
             			} else if (buypc <= sel && sel < inqpc) { // inquiry ticket
@@ -91,7 +91,7 @@ public class Trace {
             				int departure = rand.nextInt(stationnum - 1) + 1;
             				int arrival = departure + rand.nextInt(stationnum - departure) + 1; // arrival is always greater than departure
             				int leftTicket = tds.inquiry(route, departure, arrival);
-            				//System.out.println("RemainTicket" + " " + leftTicket + " " + route+ " " + departure+ " " + arrival);
+            				System.out.println("RemainTicket" + " " + leftTicket + " " + route+ " " + departure+ " " + arrival);
     						System.out.flush();  
     						         			
             			}
